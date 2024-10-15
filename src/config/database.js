@@ -1,6 +1,6 @@
-const mysql = require("mysql2");
 
-console.log('process',process.env);
+require('dotenv').config();
+const mysql = require('mysql2/promise');
 
 // const connection = mysql.createConnection({
 //   host: "localhost",

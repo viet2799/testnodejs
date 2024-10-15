@@ -10,12 +10,12 @@ app.use("/", webRoutes);
 
 
 
-connection.query("SELECT * FROM Persons", (err, results) => {
-  if (err) {
-    console.error("Error executing query:", err);
-    return;
-  }
-});
+// connection.query("SELECT * FROM Users", (err, results) => {
+//   if (err) {
+//     console.error("Error executing query:", err);
+//     return;
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
