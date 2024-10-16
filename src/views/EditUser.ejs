@@ -13,23 +13,27 @@
       <a href="/create">Create Users</a>
     </div>
     <div class="form-add-new">
-      <form action="/create-user" method="POST">
+      <form action="/edit-user" method="POST">
         <fieldset>
           <legend>Update a user</legend>
           <div class="input-group">
+            <label>STT: </label>
+            <input type="text" name="id" value="<%= userEdit.id %>" />
+          </div>
+          <div class="input-group">
             <label>Email: </label>
             <input type="text" id="emailId" name="email" />
-            <input type="text" name="email" value="<%= userEdit.email %>" />
+            <input type="text" value="<%= userEdit.email %>" />
           </div>
           <div class="input-group">
             <label>Name: </label>
-            <input type="text" name="myname" />
-            <input type="text" name="myname" value="<%= userEdit.name %>" />
+            <input type="text" name="name" />
+            <input type="text" value="<%= userEdit.name %>" />
           </div>
           <div class="input-group">
             <label>City: </label>
             <input type="text" name="city" />
-            <input type="text" name="city" value="<%= userEdit.city %>" />
+            <input type="text" value="<%= userEdit.city %>" />
           </div>
 
           <div>

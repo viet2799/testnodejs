@@ -1,5 +1,10 @@
 const { connection } = require("../config/database");
-const { getAllUser, getUserById } = require("../services/CRUDService");
+const {
+  getAllUser,
+  getUserById,
+  updateUserById,
+  deleteUserById,
+} = require("../services/CRUDService");
 
 const getHomepage = (req, res) => {
   return res.render("home.ejs");
@@ -7,21 +12,19 @@ const getHomepage = (req, res) => {
 
 const getlistPage = async (req, res) => {
   const dataUser = await getAllUser();
-  console.log('dataUser',dataUser);
   return res.render("listUsers.ejs", { listUsers: dataUser });
 };
 
 const getUpdatePage = async (req, res) => {
-    const userId = req.params.id;
-    let user = await getUserById(userId);
-    res.render('EditUser.ejs', { userEdit: user }); //x <- y
-}
-
+  const userId = req.params.id;
+  let user = await getUserById(userId);
+  res.render("EditUser.ejs", { userEdit: user }); //x <- y
+};
 
 const postCreateUser = async (req, res) => {
   let email = req.body.email;
   let name = req.body.name;
-  let city = req.body.City;
+  let city = req.body.city;
 
   let [results, fields] = await connection.query(
     `INSERT INTO
@@ -29,14 +32,36 @@ const postCreateUser = async (req, res) => {
          VALUES (?,?,?)`,
     [email, name, city]
   );
-  console.log("results", results);
-  console.log("fields", fields);
-  res.send("oce r đó");
+  res.redirect("/list-users");
+};
+
+const EditUser = async (req, res) => {
+  let email = req.body.email;
+  let name = req.body.name;
+  let city = req.body.city;
+  let id = req.body.id;
+  updateUserById({ email, name, city, userId: id });
+  res.redirect("/list-users");
+};
+
+const postDeleteUser = async (req, res) => {
+  const userId = req.params.id;
+  let user = await getUserById(userId);
+
+  res.render("delete.ejs", { userEdit: user });
+};
+
+const postHandleRemoveUser = (req, res) => {
+  deleteUserById(req.body.userId);
+  res.redirect("/list-users");
 };
 
 module.exports = {
   getHomepage,
   postCreateUser,
   getlistPage,
-  getUpdatePage
+  getUpdatePage,
+  EditUser,
+  postDeleteUser,
+  postHandleRemoveUser,
 };
