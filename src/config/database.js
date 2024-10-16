@@ -1,31 +1,42 @@
+require("dotenv").config();
+const { mongo, default: mongoose } = require("mongoose");
 
-require('dotenv').config();
-const mysql = require('mysql2/promise');
+const dbState = [
+  {
+    value: 0,
+    label: "Disconnected",
+  },
+  {
+    value: 1,
+    label: "Connected",
+  },
+  {
+    value: 2,
+    label: "Connecting",
+  },
+  {
+    value: 3,
+    label: "Disconnecting",
+  },
+];
 
-// const connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   database: "hoidanit",
-//   port: 3307,
-//   password: "123456",
-// });
+const connection = async () => {
+  try {
+    const options = {
+      pass: process.env.DB_PASSWORD,
+      dbName: process.env.DB_NAME,
+    };
+    await mongoose.connect(process.env.DB_HOST, options);
+    const state = Number(mongoose.connection.readyState);
+    console.log(dbState.find((f) => f.value == state).label, "to db"); // connected to db
 
-const connection = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'hoidanit',
-    password: "123456",
-    port: 3307,
-    waitForConnections: true,
-    connectionLimit: 10,
-    maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
-    idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
-    queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0,
-  });
-
+    console.log("Connect to database successfully");
+  } catch (error) {
+    console.log("Connect to database failed");
+    console.log(error);
+  }
+};
 
 module.exports = {
-    connection
-}
+  connection,
+};
