@@ -3,7 +3,7 @@ const User = require("../models/User");
 
 const getAllUser = async () => {
   //   const [results] = await connection.query(`select * from Users`);
-  const results = await User.find();
+  const results = await User.find({});
   return results;
 };
 
@@ -13,6 +13,7 @@ const getUserById = async (userId) => {
   //   ]);
   //   let user = results && results.length > 0 ? results[0] : {};
   const userById = await User.findById(userId);
+  userById.sele
   return userById;
 };
 

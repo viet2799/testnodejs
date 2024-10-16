@@ -1,5 +1,3 @@
-const { connection } = require("../config/database");
-const { getAllUser, getUserById } = require("../services/CRUDService");
 const User = require("../models/User");
 const {
   getAllUser,
