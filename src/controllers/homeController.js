@@ -28,7 +28,6 @@ const postCreateUser = async (req, res) => {
 
   await User.create({ email, name, city });
 
-  res.send("oce r đó");
   res.redirect("/list-users");
 };
 

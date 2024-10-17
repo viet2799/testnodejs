@@ -1,21 +1,10 @@
 const express = require("express");
 const routes = express.Router();
-const {
-  getHomepage,
-  postCreateUser,
-  getlistPage,
-  getUpdatePage,
-  EditUser,
-  postDeleteUser,
-  postHandleRemoveUser,
-} = require("../controllers/homeController");
+const { getAllUsers, addUser, editUser, deleteUser } = require("../controllers/apiController");
 
-routes.get("/", getHomepage);
-routes.get("/list-users", getlistPage);
-routes.get("/update/:id", getUpdatePage);
-routes.post("/create-user", postCreateUser);
-routes.post("/edit-user", EditUser);
-routes.post('/delete-user/:id', postDeleteUser);
-routes.post('/delete-user', postHandleRemoveUser);
+routes.get("/users", getAllUsers);
+routes.post("/user", addUser);
+routes.put("/user", editUser);
+routes.delete("/user", deleteUser);
 
 module.exports = routes;

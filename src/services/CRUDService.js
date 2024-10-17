@@ -8,36 +8,38 @@ const getAllUser = async () => {
 };
 
 const getUserById = async (userId) => {
-  //   let [results] = await connection.query("select * from Users where id = ? ", [
-  //     userId,
-  //   ]);
-  //   let user = results && results.length > 0 ? results[0] : {};
   const userById = await User.findById(userId);
-  userById.sele
+  userById.sele;
   return userById;
 };
 
 const updateUserById = async ({ email, city, name, userId }) => {
-  let [results, fields] = await connection.query(
-    `
-              UPDATE Users set email= ?, name=?, city=? WHERE id = ?
-              `,
-    [email, name, city, userId]
+  //   let [results, fields] = await connection.query(
+  //     `
+  //               UPDATE Users set email= ?, name=?, city=? WHERE id = ?
+  //               `,
+  //     [email, name, city, userId]
+  //   );
+  //   return results;
+  await User.updateOne(
+    { _id: userId },
+    { email: email, name: name, city: city }
   );
-  return results;
 };
 
 const deleteUserById = async (UserId) => {
-  let [results] = await connection.query(`DELETE FROM Users WHERE id = ?`, [
-    UserId,
-  ]);
-  return results;
+  //   let [results] = await connection.query(`DELETE FROM Users WHERE id = ?`, [
+  //     UserId,
+  //   ]);
+  //   return results;
+  //   const deleteUser = await User.findByIdAndDelete(UserId);
+  //   return deleteUser;
+  await User.deleteOne({ _id: UserId });
 };
 
 module.exports = {
   getAllUser,
   getUserById,
   updateUserById,
-  getUserById,
   deleteUserById,
 };

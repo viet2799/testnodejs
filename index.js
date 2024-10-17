@@ -1,13 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const configViewEngine = require("./src/config/viewEngine");
-const webRoutes = require("./src/routes/api");
+const webRoutes = require("./src/routes/web");
+const apiRoutes = require("./src/routes/api");
 const { connection } = require("./src/config/database");
 const app = express();
 
 const port = 3000;
 configViewEngine(app);
 app.use("/", webRoutes);
+app.use("/v1/api", apiRoutes);
 
 
 (async () => {
