@@ -7,7 +7,7 @@ const customerShema = new mongoose.Schema(
     email: { type: String, default: "" },
     address: { type: String, default: "" },
     phone: { type: String, default: "" },
-    dob: { type: Date, default: Date.now },
+    dob: { type: String, default: "" },
     description: { type: String, default: "" },
     image: { type: String, default: "" },
   },

@@ -1,4 +1,9 @@
 const User = require("../models/User");
+const fileUpload = require("express-fileupload");
+const {
+  handleUploadSingleFileName,
+  handleUploadMultipleFile,
+} = require("../services/UploadFileService");
 
 const getAllUsers = async (req, res) => {
   const results = await User.find({});
@@ -53,9 +58,31 @@ const deleteUser = async (req, res) => {
   });
 };
 
+const UploadSingleFile = async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+  const result = await handleUploadSingleFileName(req.files.image);
+
+  return res.send(result);
+};
+
+const UploadMultipleFile = async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+  if (Array.isArray(req.files.image)) {
+    const results = handleUploadMultipleFile(req?.files?.image);
+    return res.send(results);
+  }
+  return res.send("Please upload multiple files");
+};
+
 module.exports = {
   getAllUsers,
   addUser,
   editUser,
-  deleteUser
+  deleteUser,
+  UploadSingleFile,
+  UploadMultipleFile,
 };
